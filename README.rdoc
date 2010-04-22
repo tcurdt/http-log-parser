@@ -1,0 +1,30 @@
+= LogParser
+
+== Introduction
+
+This gem provides an easy to use parser to various HTTP log formats.
+
+== Installation
+
+Just run:
+
+    gem install http-log-parser
+
+That should take care of it.
+
+== Usage
+
+    require 'http_log_parser'
+    
+    parser = HttpLogParser.new
+
+    File.open('/path/to.log', 'r') do |file|
+      while(line = file.gets)
+        parsed_data = parser.parse_line(line)
+        p parsed_data
+      end
+    end
+
+== License
+
+This code is made availablie under the MIT license. It is based on based on code from Jan Wikholm.
