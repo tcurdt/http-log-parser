@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
+require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
     s.name      =   "http-log-parser"
@@ -31,6 +32,13 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.test_files = FileList["test/**/*_test.rb"]
+  t.verbose = true
+end
+
 task :default => "pkg/#{spec.name}-#{spec.version}.gem" do
     puts "generated latest version"
 end
+

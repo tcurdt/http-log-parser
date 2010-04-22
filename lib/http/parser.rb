@@ -56,35 +56,43 @@ class HttpLogParser
     :combined_with_cookies => '%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" \"%{Cookies}i\"'
   }
 
-  attr_reader :known_formats
+  attr_reader :formats
 
-  def initialize
-    @log_format = []
-    initialize_known_formats
-  end
+  def initialize(formats = nil)
 
-  def initialize_known_formats
-    @known_formats = {}
-    LOG_FORMATS.each do |name, format|
-      @known_formats[name] = HttpLogFormat.new(name, format)
+    case formats
+      when String then
+        @formats = { :provided => formats }
+      when Hash then
+        @formats = formats
+      else
+        @formats = {}
+        LOG_FORMATS.each do |name, format|
+          @formats[name] = HttpLogFormat.new(name, format)
+        end
     end
+
   end
 
-  def check_format(line)
-    @known_formats.sort_by { |key, log_format| log_format.format_regex.source.size }.reverse.each { |key, log_format|
-      return key if line.match(log_format.format_regex)
+  def format_from_line(line)
+    @formats.sort_by { |key, format| format.format_regex.source.size }.reverse.each { |key, format|
+      return @formats[key] if line.match(format.format_regex)
     }
-    return :unknown
+    return nil
   end
 
   def parse_line(line)
-    @format = check_format(line)
-    log_format = @known_formats[@format]
-    raise ArgumentError if log_format.nil? or line !~ log_format.format_regex
-    data = line.scan(log_format.format_regex).flatten
+    
+    if @format.nil?
+      @format = format_from_line(line)
+    end
+        
+    raise ArgumentError if @format.nil? or line !~ @format.format_regex
+
+    data = line.scan(@format.format_regex).flatten
     parsed_data = {}
-    log_format.format_symbols.size.times do |i|
-      parsed_data[log_format.format_symbols[i]] = data[i]
+    @format.format_symbols.size.times do |i|
+      parsed_data[@format.format_symbols[i]] = data[i]
     end
 
     parsed_data[:datetime] = parsed_data[:datetime][1...-1] if parsed_data[:datetime]
