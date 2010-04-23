@@ -5,7 +5,7 @@ require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
     s.name      =   "http-log-parser"
-    s.version   =   "0.0.1"
+    s.version   =   "0.0.2"
     s.author    =   "Torsten Curdt"
     s.email     =   "tcurdt at vafer.org"
     s.homepage  =   "http://github.com/tcurdt/http-log-parser"
