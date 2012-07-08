@@ -3,21 +3,21 @@ require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 require 'uri'
 
 class ParserTest < Test::Unit::TestCase
-  
+
   def test_parser_creation
 
     parser = HttpLogParser.new
     assert_not_nil parser
     assert_equal 5, parser.formats.size
 
-    parser = HttpLogParser.new('%h %l %u %t \"%r\" %>s %b')    
+    parser = HttpLogParser.new('%h %l %u %t \"%r\" %>s %b')
     assert_not_nil parser
     assert_equal 1, parser.formats.size
 
     parser = HttpLogParser.new({
       :common => '%h %l %u %t \"%r\" %>s %b',
       :common_with_virtual => '%v %h %l %u %t \"%r\" %>s %b',
-    })   
+    })
     assert_not_nil parser
     assert_equal 2, parser.formats.size
 
@@ -44,5 +44,15 @@ class ParserTest < Test::Unit::TestCase
     assert_equal 11, parsed.size
 
   end
-  
+
+  # def test_large_log
+  #   parser = HttpLogParser.new
+  #   assert_not_nil parser
+  #   File.open('.../log/access.log', 'r:ascii-8bit') do |file|
+  #     while(line = file.gets)
+  #       parsed_data = parser.parse_line(line)
+  #     end
+  #   end
+  # end
+
 end

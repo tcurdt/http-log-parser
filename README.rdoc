@@ -18,7 +18,7 @@ That should take care of it.
     
     parser = HttpLogParser.new
 
-    File.open('/path/to.log', 'r') do |file|
+    File.open('/path/to.log', 'r:ascii-8bit') do |file|
       while(line = file.gets)
         parsed_data = parser.parse_line(line)
         p parsed_data

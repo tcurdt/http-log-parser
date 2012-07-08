@@ -82,12 +82,13 @@ class HttpLogParser
   end
 
   def parse_line(line)
-    
+
     if @format.nil?
       @format = format_from_line(line)
+      raise "Failed to detect format" if @format.nil?
     end
-        
-    raise ArgumentError if @format.nil? or line !~ @format.format_regex
+
+    raise "Line does not match format" if line !~ @format.format_regex
 
     data = line.scan(@format.format_regex).flatten
     parsed_data = {}
