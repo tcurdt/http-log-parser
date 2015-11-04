@@ -1,42 +1,27 @@
-require 'rubygems'
-# require 'rubygems/package_task'
-require 'rake/gempackagetask'
-require 'rdoc/task'
-require 'rake/testtask'
+require "bundler/gem_tasks"
 
-spec = Gem::Specification.new do |s|
-  s.summary          = "A package for parsing web server logs."
-  s.description      = "HTTP log file parser"
-  s.platform         = Gem::Platform::RUBY
-  s.name             = "http-log-parser"
-  s.version          = "0.0.3"
-  s.author           = "Torsten Curdt"
-  s.email            = "tcurdt at vafer.org"
-  s.homepage         = "http://github.com/tcurdt/http-log-parser"
-  s.has_rdoc         = true
-  s.extra_rdoc_files = [ "README.rdoc" ]
-  s.require_path     = "lib"
-  s.files            = %w(README.rdoc Rakefile) + Dir.glob("lib/**/*")
+spec = Gem::Specification.load("http_log_parser.gemspec")
+
+require 'rake/testtask'
+Rake::TestTask.new do |t|
+  t.test_files = spec.test_files
 end
 
-Rake::GemPackageTask.new(spec) do |pkg|
+require 'rubygems/package_task'
+Gem::PackageTask.new(spec) do |pkg|
+  pkg.need_zip = true
   pkg.need_tar = true
 end
 
+require 'rdoc/task'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'HttpLogParser'
   rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList[ "test/**/*_test.rb" ]
-  t.verbose = true
-end
-
 task :default => "pkg/#{spec.name}-#{spec.version}.gem" do
-    puts "generated latest version"
+  puts "generated latest version"
 end

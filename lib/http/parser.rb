@@ -1,3 +1,4 @@
+# class that defines the actual log format
 class HttpLogFormat
   attr_reader :name, :format, :format_symbols, :format_regex
 
@@ -46,6 +47,7 @@ class HttpLogFormat
   end
 end
 
+# parser class that detects the log format and creates a hash of the data per line
 class HttpLogParser
 
   LOG_FORMATS = {
@@ -78,15 +80,12 @@ class HttpLogParser
     @formats.sort_by { |key, format| format.format_regex.source.size }.reverse.each { |key, format|
       return @formats[key] if line.match(format.format_regex)
     }
-    return nil
+    raise "Failed to detect format"
   end
 
   def parse_line(line)
 
-    if @format.nil?
-      @format = format_from_line(line)
-      raise "Failed to detect format" if @format.nil?
-    end
+    @format ||= format_from_line(line)
 
     raise "Line does not match format" if line !~ @format.format_regex
 

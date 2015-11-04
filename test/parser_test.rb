@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/test_helper')
+require 'test/unit'
+require "#{File.expand_path(File.dirname(__FILE__))}/../lib/http_log_parser.rb"
 
 require 'uri'
 
