@@ -23,5 +23,5 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
 end
 
 task :default => "pkg/#{spec.name}-#{spec.version}.gem" do
-  puts "generated latest version"
+  puts "now> gem push pkg/#{spec.name}-#{spec.version}.gem"
 end
