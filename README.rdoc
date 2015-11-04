@@ -1,5 +1,7 @@
 = LogParser
 
+{<img src="https://travis-ci.org/tcurdt/http-log-parser.svg" alt="Build Status" />}[https://travis-ci.org/tcurdt/http-log-parser]
+
 == Introduction
 
 This gem provides an easy to use parser to various HTTP log formats.
