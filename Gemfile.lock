@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    http-log-parser (1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    power_assert (2.0.1)
+    rake (13.0.6)
+    test-unit (3.5.2)
+      power_assert
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  http-log-parser!
+  rake (>= 10.4)
+  test-unit (>= 3.1)
+
+BUNDLED WITH
+   1.17.2
