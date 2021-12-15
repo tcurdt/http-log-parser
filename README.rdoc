@@ -27,6 +27,11 @@ That should take care of it.
       end
     end
 
+== Testing
+
+    bundle install --path vendor/bundle
+    rake test
+
 == License
 
 This code is made availablie under the MIT license. It is based on based on code from Jan Wikholm.
