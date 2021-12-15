@@ -11,15 +11,15 @@ Gem::Specification.new do |s|
   s.email            = "tcurdt at vafer.org"
   s.licenses         = [ 'MIT' ]
   s.homepage         = "http://github.com/tcurdt/http-log-parser"
-  s.has_rdoc         = true
+  # s.has_rdoc         = true
   s.extra_rdoc_files = [ "README.rdoc" ]
   s.require_path     = "lib"
   s.files            = Dir.glob("lib/**/*") + %w(README.rdoc Rakefile)
   s.test_files       = Dir.glob("test/**/*")
 
-  s.required_ruby_version = "~> 1.8"
+  s.required_ruby_version = ">= 1.8"
 
-  s.add_development_dependency 'rake', '~> 10.4'
-  s.add_development_dependency 'test-unit', '~> 3.1'
+  s.add_development_dependency 'rake', '>= 10.4'
+  s.add_development_dependency 'test-unit', '>= 3.1'
 
 end
