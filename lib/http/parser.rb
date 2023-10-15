@@ -63,15 +63,15 @@ class HttpLogParser
   def initialize(formats = nil)
 
     case formats
-      when String then
-        @formats = { :provided => formats }
       when Hash then
-        @formats = formats
-      else
         @formats = {}
-        LOG_FORMATS.each do |name, format|
+        formats.each do |name, format|
           @formats[name] = HttpLogFormat.new(name, format)
         end
+      when String then
+        initialize({:provided => formats})
+      when nil
+        initialize LOG_FORMATS
     end
 
   end
